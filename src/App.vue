@@ -21,12 +21,63 @@ export default {
   },
   methods: {
     random() {
-      const startIndex = Math.floor(0 + Math.random() * 3);
-      this.statesLights[startIndex] = true;
+      const identifiers = {
+        1: ORDER.red,
+        2: ORDER.yellow,
+        3: ORDER.green
+      };
+      const startIndex = Math.floor(
+        1 + Math.random() * Object.keys(identifiers).length
+      );
+      this.setLight(identifiers[startIndex]);
+      // this.statesLights[startIndex] = true;
+    },
+    setLight(objLights) {
+      let pathname;
+      if (objLights === ORDER.red) {
+        this.statesLights = [true, false, false];
+      } else if (objLights === ORDER.green) {
+        this.statesLights = [false, false, true];
+      } else {
+        this.statesLights = [false, true, false];
+      }
+
+      setTimeout(
+        this.setLight.bind(this),
+        objLights.period * 1000,
+        objLights.next
+      );
     }
   },
   beforeMount() {
     this.random();
+  }
+};
+
+const ORDER = {
+  red: {
+    period: 3,
+    get next() {
+      return ORDER.yellow2;
+    }
+  },
+  yellow: {
+    period: 3,
+    get next() {
+      return ORDER.red;
+    }
+  },
+  yellow2: {
+    period: 3,
+    get next() {
+      return ORDER.green;
+    }
+  },
+  green: {
+    period: 3,
+    get next() {
+      return ORDER.yellow;
+    }
   }
 };
 </script>
