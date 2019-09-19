@@ -27,10 +27,10 @@ export default {
         pathname = "/1";
       } else if (objLights === ORDER.green) {
         this.statesLights = [false, false, true];
-        pathname = "/2";
+        pathname = "/3";
       } else {
         this.statesLights = [false, true, false];
-        pathname = "/3";
+        pathname = "/2";
       }
       window.history.pushState(null, "", pathname);
       setTimeout(
@@ -41,21 +41,26 @@ export default {
     }
   },
   beforeMount() {
+    let startIndex = parseInt(window.location.pathname.slice(-1), 10);
     const identifiers = {
       1: ORDER.red,
       2: ORDER.yellow,
       3: ORDER.green
     };
-    const startIndex = Math.floor(
-      1 + Math.random() * Object.keys(identifiers).length
-    );
-    this.setLight(identifiers[startIndex]);
+    if (!startIndex) {
+      startIndex = Math.floor(
+        1 + Math.random() * Object.keys(identifiers).length
+      );
+      this.setLight(identifiers[startIndex]);
+    } else {
+      this.setLight(identifiers[startIndex]);
+    }
   }
 };
 
 const ORDER = {
   red: {
-    period: 3,
+    period: 10,
     get next() {
       return ORDER.yellow2;
     }
@@ -73,7 +78,7 @@ const ORDER = {
     }
   },
   green: {
-    period: 3,
+    period: 15,
     get next() {
       return ORDER.yellow;
     }
