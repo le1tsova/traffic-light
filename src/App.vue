@@ -22,6 +22,7 @@ export default {
   methods: {
     setLight(objLights) {
       let pathname;
+
       if (objLights === ORDER.red) {
         this.statesLights = [true, false, false];
         pathname = "/1";
@@ -32,7 +33,9 @@ export default {
         this.statesLights = [false, true, false];
         pathname = "/2";
       }
+
       window.history.pushState(null, "", pathname);
+
       setTimeout(
         this.setLight.bind(this),
         objLights.period * 1000,
@@ -47,14 +50,14 @@ export default {
       2: ORDER.yellow,
       3: ORDER.green
     };
+
     if (!startIndex) {
       startIndex = Math.floor(
         1 + Math.random() * Object.keys(identifiers).length
       );
-      this.setLight(identifiers[startIndex]);
-    } else {
-      this.setLight(identifiers[startIndex]);
     }
+
+    this.setLight(identifiers[startIndex]);
   }
 };
 
@@ -86,18 +89,4 @@ const ORDER = {
 };
 </script>
 <style >
-.red {
-  background: red;
-  opacity: 0.2;
-  margin-bottom: 10px;
-}
-.yellow {
-  background: yellow;
-  opacity: 0.2;
-  margin-bottom: 10px;
-}
-.green {
-  background: green;
-  opacity: 0.2;
-}
 </style>
