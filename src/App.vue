@@ -20,28 +20,19 @@ export default {
     };
   },
   methods: {
-    random() {
-      const identifiers = {
-        1: ORDER.red,
-        2: ORDER.yellow,
-        3: ORDER.green
-      };
-      const startIndex = Math.floor(
-        1 + Math.random() * Object.keys(identifiers).length
-      );
-      this.setLight(identifiers[startIndex]);
-      // this.statesLights[startIndex] = true;
-    },
     setLight(objLights) {
       let pathname;
       if (objLights === ORDER.red) {
         this.statesLights = [true, false, false];
+        pathname = "/1";
       } else if (objLights === ORDER.green) {
         this.statesLights = [false, false, true];
+        pathname = "/2";
       } else {
         this.statesLights = [false, true, false];
+        pathname = "/3";
       }
-
+      window.history.pushState(null, "", pathname);
       setTimeout(
         this.setLight.bind(this),
         objLights.period * 1000,
@@ -50,7 +41,15 @@ export default {
     }
   },
   beforeMount() {
-    this.random();
+    const identifiers = {
+      1: ORDER.red,
+      2: ORDER.yellow,
+      3: ORDER.green
+    };
+    const startIndex = Math.floor(
+      1 + Math.random() * Object.keys(identifiers).length
+    );
+    this.setLight(identifiers[startIndex]);
   }
 };
 
