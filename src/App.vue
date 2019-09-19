@@ -16,8 +16,17 @@ export default {
   },
   data() {
     return {
-      statesLights: [true, false, false]
+      statesLights: [false, false, false]
     };
+  },
+  methods: {
+    random() {
+      const startIndex = Math.floor(0 + Math.random() * 3);
+      this.statesLights[startIndex] = true;
+    }
+  },
+  beforeMount() {
+    this.random();
   }
 };
 </script>
